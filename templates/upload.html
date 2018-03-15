@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+      <!-- Site made with Mobirise Website Builder v4.6.6, https://mobirise.com -->
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="generator" content="Mobirise v4.6.6, mobirise.com">
+      <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+      <link rel="shortcut icon" href="assets/images/logo4.png" type="image/x-icon">
+      <meta name="description" content="">
+      <title>Upload you excel file</title>
+      <link rel="stylesheet" href="{% static "assets/web/assets/mobirise-icons/mobirise-icons.css" %}">
+      <link rel="stylesheet" href="{% static "assets/tether/tether.min.css" %}">
+      <link rel="stylesheet" href="{% static "assets/bootstrap/css/bootstrap.min.css" %}">
+      <link rel="stylesheet" href="{% static "assets/bootstrap/css/bootstrap-grid.min.css" %}">
+      <link rel="stylesheet" href="{% static "assets/bootstrap/css/bootstrap-reboot.min.css" %}">
+      <link rel="stylesheet" href="{% static "assets/theme/css/style.css" %}">
+      <link rel="stylesheet" href="{% static "assets/mobirise/css/mbr-additional.css"  %}" type="text/css">
+</head>
+<body>
+
+
+  <section class="cid-qMkNzmsjir mbr-fullscreen mbr-parallax-background" id="header15-j">
+
+    <div class="mbr-overlay" style="opacity: 0.5; background-color: rgb(7, 59, 76);"></div>
+
+    <div class="container align-right">
+<div class="row">
+    <div class="mbr-white col-lg-8 col-md-7 content-container">
+        <h1 class="mbr-section-title mbr-bold pb-3 mbr-fonts-style display-1">
+            Upload Excel Files</h1>
+        <p class="mbr-text pb-3 mbr-fonts-style display-5">Please upload the form you wanna compare,<br>a new world is opening to you, for real</p>
+    </div>
+    <div class="col-lg-4 col-md-5">
+    <div class="form-container">
+
+            <form class="mbr-form" method="post" enctype="multipart/form-data">{% csrf_token %}
+                 <div>
+                     {{ form }}
+                 </div>
+                 <div>
+                   <button class="btn btn-secondary btn-form display-4">Submit</button>
+                 </div>
+            </form>
+
+    </div>
+    </div>
+</div>
+    </div>
+
+</section>
+
+<section class="engine"><a href="https://mobirise.ws/p">open source website creator</a></section><section once="" class="cid-qMkPASv22u" id="footer6-p">
+    <div class="container">
+        <div class="media-container-row align-center mbr-white">
+            <div class="col-12">
+                <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                    © Copyright 2017 Netease - All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+  <script src="{% static "assets/web/assets/jquery/jquery.min.js" %}"></script>
+  <script src="{% static "assets/popper/popper.min.js" %}"></script>
+  <script src="{% static "assets/tether/tether.min.js" %}"></script>
+  <script src="{% static "assets/bootstrap/js/bootstrap.min.js" %}"></script>
+  <script src="{% static "assets/smoothscroll/smooth-scroll.js" %}"></script>
+  <script src="{% static "assets/parallax/jarallax.min.js" %}"></script>
+  <script src="{% static "assets/theme/js/script.js" %}"></script>
+  <script src="{% static "assets/formoid/formoid.min.js" %}"></script>
+
+</body>
+
+</html>
