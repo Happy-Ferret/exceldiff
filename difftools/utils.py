@@ -81,15 +81,16 @@ def gendata(data1, data2, row_length, col_length, row_insert, col_insert, row_de
     for i in range(row_length):
         row = []
         data = [''] * col_length
-        if i in row_insert:
+        if i in row_insert or i - cur >= len(t1):
             cur = cur + 1
             data1.append(data)
             continue
         else:
+
             row = t1[i - cur]
             current = 0
             for j in range(col_length):
-                if j in col_insert:
+                if j in col_insert or j - current >= len(row):
                     current = current + 1
                 else:
                     data[j] = row[j - current]
@@ -98,7 +99,7 @@ def gendata(data1, data2, row_length, col_length, row_insert, col_insert, row_de
     for i in range(row_length):
         row = []
         data = [''] * col_length
-        if i in row_delete:
+        if i in row_delete or i - cur >= len(t2):
             cur = cur + 1
             data2.append(data)
             continue
@@ -106,7 +107,7 @@ def gendata(data1, data2, row_length, col_length, row_insert, col_insert, row_de
             row = t2[i - cur]
             current = 0
             for j in range(col_length):
-                if j in col_delete:
+                if j in col_delete or j - current >= len(row):
                     current = current + 1
                 else:
                     data[j] = row[j - current]
