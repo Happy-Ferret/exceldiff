@@ -101,6 +101,10 @@ $( document ).ready(function() {  // Runs when the document is ready
         event.data.instance.selectCell(0, event.data.val, event.data.length -1, event.data.val);
     }
 
+    function selectElement(event) {
+        event.data.instance.selectCell(event.data.row, event.data.col);
+    }
+
     function setRowClick(instance, row_delete, row_insert, row_header1, row_header2, col_length){
 
         var rowval = 0;
@@ -166,13 +170,20 @@ $( document ).ready(function() {  // Runs when the document is ready
     }
 
     function setDiffClick(instance, datadiff, col_header, row_header, data1, data2){
-
+          var eleval = 0;
           for(var i = 0; i < datadiff.length; i++){
               var diffelement = datadiff[i];
-              //console.log(datadiff[i]);
-              if (row === diffelement[0] && col === diffelement[1]){
-                  cellProperties.renderer = diffRenderer;
-              }
+              $('#element').append("<tr><th scope='row'> ("  + row_header[diffelement[0]] + "," +
+                                col_header[diffelement[1]] + ")" +  "</th>\n" +
+                              "<td><a id='element"+ eleval +"' href='#'>" +
+                               data1[diffelement[0]][diffelement[1]] + " -> " + data2[diffelement[0]][diffelement[1]] +
+                               "</a></td></tr>");
+              $('#element' + eleval).on('click', {
+                instance: instance,
+                row: diffelement[0],
+                col: diffelement[1]
+              }, selectElement);
+              eleval++;
           }
     }
 
@@ -275,6 +286,7 @@ $( document ).ready(function() {  // Runs when the document is ready
 
        setRowClick(instance1, row_delete, row_insert, row_header1, row_header2, col_header1.length);
        setColClick(instance1, col_delete, col_insert, col_header1, col_header2, row_header1.length);
+       setDiffClick(instance1, datadiff, col_header1, row_header1, data1, data2)
    });
 
 }); // End of $(document).ready
