@@ -17,6 +17,7 @@ def success(request):
 
 def table(request):
     context = {}
+    context = {"back": reverse('index')}
     return render(request, "tables.html", context)
 
 def upload_file(request):
