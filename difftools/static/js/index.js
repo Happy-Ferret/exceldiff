@@ -201,7 +201,8 @@ $( document ).ready(function() {  // Runs when the document is ready
         contextMenu: true
    });
 
-   $.getJSON("../../media/result.json", function(json) {
+   $.getJSON("../../media/result" + $("#id").text() + ".json", function(json) {
+
         console.log(json);
         var data1 = json["data1"];
         var data2 = json["data2"];

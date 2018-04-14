@@ -138,96 +138,112 @@ def execute_diff(ext):
     wb1 = load_workbook(filename = BASE_DIR + "/media/" + '1.' + ext)
     wb2 = load_workbook(filename = BASE_DIR + "/media/" + '2.' + ext)
 
-    # grab the active worksheet
-    ws1 = wb1.active
-    ws2 = wb2.active
+    set1 = set(wb1.sheetnames)
+    set2 = set(wb2.sheetnames)
+    intersect = set1 & set2
+    set1 = set1 - intersect
+    set2 = set2 - intersect
 
-    # Data can be assigned directly to cells
-    t1 = tuple(ws1.rows)
-    t2 = tuple(ws2.rows)
+    results = []
+    delete = list(set1)
+    insert = list(set2)
+    index = 0
+    for wsname in intersect:
 
-    len1 = len(t1)
-    len2 = len(t2)
+        # grab the active worksheet
+        ws1 = wb1[wsname]
+        ws2 = wb2[wsname]
 
-    arr = []
-    for t in t1:
-        row = []
-        for i in t:
-            row.append(i.value)
-        tuprow = tuple(row)
-        arr.append(tuprow)
+        # Data can be assigned directly to cells
+        t1 = tuple(ws1.rows)
+        t2 = tuple(ws2.rows)
 
-    t1 = tuple(arr)
+        len1 = len(t1)
+        len2 = len(t2)
 
-    arr = []
-    for t in t2:
-        row = []
-        for i in t:
-            row.append(i.value)
-        tuprow = tuple(row)
-        arr.append(tuprow)
+        arr = []
+        for t in t1:
+            row = []
+            for i in t:
+                row.append(i.value)
+            tuprow = tuple(row)
+            arr.append(tuprow)
 
-    t2 = tuple(arr)
+        t1 = tuple(arr)
 
-    s = difflib.SequenceMatcher(None, t1[0], t2[0])
-    longmatch_line = s.find_longest_match(0, len(t1[0]), 0, len(t2[0]))
-    line_a = longmatch_line.a
-    line_b = longmatch_line.b
-    opcode = s.get_opcodes()
+        arr = []
+        for t in t2:
+            row = []
+            for i in t:
+                row.append(i.value)
+            tuprow = tuple(row)
+            arr.append(tuprow)
 
-    col_delete = []
-    col_insert = []
-    cursors = opcodes(col_delete, col_insert, opcode)
+        t2 = tuple(arr)
 
-    col_length = cursors[0] + len(t1[0])
+        s = difflib.SequenceMatcher(None, t1[0], t2[0])
+        longmatch_line = s.find_longest_match(0, len(t1[0]), 0, len(t2[0]))
+        line_a = longmatch_line.a
+        line_b = longmatch_line.b
+        opcode = s.get_opcodes()
 
-    c1 = tuple(ws1.columns)
-    c2 = tuple(ws2.columns)
+        col_delete = []
+        col_insert = []
+        cursors = opcodes(col_delete, col_insert, opcode)
 
-    arr = []
-    for c in c1:
-        row = []
-        for i in c:
-            row.append(i.value)
-        tuprow = tuple(row)
-        arr.append(tuprow)
-    c1 = tuple(arr)
+        col_length = cursors[0] + len(t1[0])
 
-    arr = []
-    for c in c2:
-        row = []
-        for i in c:
-            row.append(i.value)
-        tuprow = tuple(row)
-        arr.append(tuprow)
+        c1 = tuple(ws1.columns)
+        c2 = tuple(ws2.columns)
 
-    c2 = tuple(arr)
+        arr = []
+        for c in c1:
+            row = []
+            for i in c:
+                row.append(i.value)
+            tuprow = tuple(row)
+            arr.append(tuprow)
+        c1 = tuple(arr)
+
+        arr = []
+        for c in c2:
+            row = []
+            for i in c:
+                row.append(i.value)
+            tuprow = tuple(row)
+            arr.append(tuprow)
+
+        c2 = tuple(arr)
 
 
-    s = difflib.SequenceMatcher(None, c1[line_a], c2[line_b])
-    opcode = s.get_opcodes()
+        s = difflib.SequenceMatcher(None, c1[line_a], c2[line_b])
+        opcode = s.get_opcodes()
 
-    row_delete = []
-    row_insert = []
-    cursors = opcodes(row_delete, row_insert, opcode)
+        row_delete = []
+        row_insert = []
+        cursors = opcodes(row_delete, row_insert, opcode)
 
-    row_length = cursors[0] + len(c1[0])
+        row_length = cursors[0] + len(c1[0])
 
-    data1 = []
-    data2 = []
-    datadiff = []
+        data1 = []
+        data2 = []
+        datadiff = []
 
-    col_header1 = []
-    col_header2 = []
-    row_header1 = []
-    row_header2 = []
+        col_header1 = []
+        col_header2 = []
+        row_header1 = []
+        row_header2 = []
 
-    gendata(data1, data2, row_length, col_length, row_insert, col_insert, row_delete, col_delete, t1, t2)
-    diffpoints(data1, data2, datadiff, row_insert, col_insert, row_delete, col_delete)
-    headers(col_header1, col_header2, row_length, col_length, row_header1, row_header2, row_insert, col_insert,
-            row_delete, col_delete)
-    dict = {}
-    gendict(dict, data1, data2, row_insert, col_insert, row_delete, col_delete, datadiff, col_header1, col_header2,
-            row_header1, row_header2)
-    with open(BASE_DIR + "/media/" + 'result.json', 'w') as fp:
-        json.dump(dict, fp)
+        gendata(data1, data2, row_length, col_length, row_insert, col_insert, row_delete, col_delete, t1, t2)
+        diffpoints(data1, data2, datadiff, row_insert, col_insert, row_delete, col_delete)
+        headers(col_header1, col_header2, row_length, col_length, row_header1, row_header2, row_insert, col_insert,
+                row_delete, col_delete)
+        dict = {}
+        gendict(dict, data1, data2, row_insert, col_insert, row_delete, col_delete, datadiff, col_header1, col_header2,
+                row_header1, row_header2)
+        with open(BASE_DIR + "/media/" + 'result' + str(index) + '.json', 'w') as fp:
+            json.dump(dict, fp)
+        index = index + 1
+        results.append(wsname)
+
+    return [results, delete, insert]

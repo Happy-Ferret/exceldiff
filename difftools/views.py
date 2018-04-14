@@ -11,13 +11,21 @@ from .forms import FileFieldForm
 
 # Create your views here.
 def success(request):
-    execute_diff("xlsx")
-    context = {"continue": reverse('tables'), "back": reverse('index')}
+    results = execute_diff("xlsx")
+    urls = []
+    if len(results):
+        for enum, i in enumerate(results[0]):
+            urls.append((i,reverse('tables', args=[enum])))
+    context = {
+        "back": reverse('index'),
+        "delete": results[1],
+        "insert": results[2],
+        "urls": urls
+    }
     return render(request, "success.html", context)
 
-def table(request):
-    context = {}
-    context = {"back": reverse('index')}
+def table(request, id):
+    context = {"back": reverse('index'), "id": id}
     return render(request, "tables.html", context)
 
 def upload_file(request):

@@ -28,12 +28,67 @@
                 <h3 class="mbr-section-subtitle align-center mbr-light pb-3 mbr-fonts-style display-2">Excel files have successfully uploaded.</h3>
                 <p class="mbr-text align-center pb-3 mbr-fonts-style display-5">Click continue to view the comparison.
                 </p>
-                <div class="mbr-section-btn align-center"><a class="btn btn-md btn-primary display-4" href="{{ continue }}">
-                        <span class="mbr-iconfont mbri-file"></span>Continue</a>
+                <div class="mbr-section-btn align-center">
+                  <!--  <a class="btn btn-md btn-primary display-4" href="">
+                        <span class="mbr-iconfont mbri-file"></span>Continue</a> -->
                     <a class="btn btn-md btn-white-outline display-4" href="{{ back }}">
                         <span class="mbr-iconfont mbri-idea"></span>Back</a></div>
             </div>
         </div>
+
+
+        <div class="row align-center mbr-white">
+            <div class="col-sm">
+
+                <table id="rows" class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Different Sheet Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for result, url in urls %}
+                      <tr>
+                          <td><a class="mbr-white" href="{{ url }}">{{ result }}</a></td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-sm">
+              <table id="cols" class="table" bgcolor="#FF0000">
+                  <thead>
+                    <tr>
+                      <th scope="col"> Deleted Sheet Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for del in delete %}
+                      <tr>
+                          <td>{{ del }}</td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="col-sm">
+                <table id="element" class="table" bgcolor="#FF0000">
+                  <thead>
+                    <tr>
+                      <th scope="col">Added Sheet Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for ins in insert %}
+                      <tr>
+                          <td>{{ ins }}</td>
+                      </tr>
+                  {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+          </div>
+
     </div>
 
 </section>

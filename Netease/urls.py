@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.upload_file, name="index"),
     url(r'^success/', views.success, name="success"),
-    url(r'^tables/', views.table, name="tables")
+    url(r'^tables/(?P<id>\d+)/$', views.table, name="tables")
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
