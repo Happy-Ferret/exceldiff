@@ -2,6 +2,7 @@ from Netease.settings import BASE_DIR
 from openpyxl import Workbook
 from openpyxl import load_workbook
 import difflib
+import filecmp
 import json
 
 def handle_uploaded_file(f, num):
@@ -135,8 +136,14 @@ def opcodes(delete, insert, opcodes):
     return [cursor_a, cursor_b]
 
 def execute_diff(ext):
-    wb1 = load_workbook(filename = BASE_DIR + "/media/" + '1.' + ext)
-    wb2 = load_workbook(filename = BASE_DIR + "/media/" + '2.' + ext)
+    f1 = BASE_DIR + "/media/" + '1.' + ext
+    f2 = BASE_DIR + "/media/" + '2.' + ext
+
+    if filecmp.cmp(f1, f2):
+        return []
+
+    wb1 = load_workbook(filename = f1)
+    wb2 = load_workbook(filename = f2)
 
     set1 = set(wb1.sheetnames)
     set2 = set(wb2.sheetnames)

@@ -33,10 +33,12 @@
                         <span class="mbr-iconfont mbri-file"></span>Continue</a> -->
                     <a class="btn btn-md btn-white-outline display-4" href="{{ back }}">
                         <span class="mbr-iconfont mbri-idea"></span>Back</a></div>
+
             </div>
         </div>
 
 
+    {% if not samefile %}
         <div class="row align-center mbr-white">
             <div class="col-sm">
 
@@ -88,6 +90,14 @@
                 </table>
             </div>
           </div>
+    {% else %}
+        <div class="row align-center mbr-white">
+            <div class="mbr-white col-md-12">
+                <p class="mbr-text align-center pb-3 mbr-fonts-style display-5">
+                The two files are the same. Nothing to compare</p>
+            </div>
+        </div>
+    {% endif %}
 
     </div>
 
